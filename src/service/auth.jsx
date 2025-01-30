@@ -16,3 +16,20 @@ export const signup = (bodydata) => {
 
     })
 }
+
+export const loginService = (email,password)=>{
+    return new Promise((resolve, reject) => {
+        try {
+            axiosInstance.post(auth.login,{email,password} ).then((response) => {
+                resolve(response)
+            }).catch((error) => {
+                
+                
+                reject(error.response.data)
+            })
+        } catch (error) {
+            reject(error.response.data)
+
+        }
+    })
+}

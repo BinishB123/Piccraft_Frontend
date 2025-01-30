@@ -1,12 +1,14 @@
 
 
 
-function loginReducer(action,state){
+function loginReducer(state,action){
+   
+    
     switch (action.type) {
         case 'email':return {...state,email:action.email};
-        case "passowrd":return {...state,password:action.password}
+        case "password":return {...state,password:action.password};
         default:
-            break;
+         state;
     }
 }
 

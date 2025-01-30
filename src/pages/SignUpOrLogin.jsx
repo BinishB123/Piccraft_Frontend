@@ -1,19 +1,31 @@
 import { RiImageCircleAiFill } from "react-icons/ri";
 import Signup from "../components/signUp";
 import Login from "../components/login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { urgentreset } from "../redux/slice";
 
 function LoginOrSignUp({ value }) {
   const navigate = useNavigate();
-  const { userInfo } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { userInfo, success, message, error, errormessage } = useSelector(
+    (state) => state.user
+  );
   useEffect(() => {
     if (userInfo?.id) {
       navigate("/");
       return;
     }
-  }, [value]);
+    if (success && message) {
+      toast.success(message);
+    }
+    if (error && errormessage) {
+      toast.error(errormessage);
+    }
+    dispatch(urgentreset());
+  }, [value, success, error]);
 
   return (
     <>

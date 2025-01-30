@@ -1,11 +1,15 @@
 import { useReducer } from "react";
 import loginReducer from "../reducers/loginReducer";
 import { toast } from "sonner";
+import { loginService } from "../service/auth";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/thunk/auth";
 
 function Login() {
+  const loginDipatch = useDispatch();
   const [loginData, dispatch] = useReducer(loginReducer, {
     email: "",
-    passowrd: "",
+    password: "",
   });
 
   const login = () => {
@@ -14,6 +18,7 @@ function Login() {
     ) {
       return toast.warning("please provide valid emailId ");
     }
+    loginDipatch(loginUser(loginData));
   };
 
   return (
@@ -38,16 +43,16 @@ function Login() {
           <h2 className="text-sm text-green-700">Password</h2>
           <input
             type="password"
-            value={loginData.passowrd}
+            value={loginData.password}
             className="w-full h-[40px] border-2  pl-4 rounded-sm border-green-400 outline-none"
             onChange={(e) =>
-              dispatch({ type: "password", passowrd: e.target.value })
+              dispatch({ type: "password", password: e.target.value })
             }
           />
         </div>
         <div className="w-[80%] h-[100px]  flex flex-col space-y-2 justify-center">
           <button
-            className="w-[100%] h-[50px] bg-green-400 text-xl text-white rounded-md font-semibold"
+            className="w-[100%] cursor-pointer h-[50px] bg-green-400 text-xl text-white rounded-md font-semibold"
             onClick={login}
           >
             SIGN IN

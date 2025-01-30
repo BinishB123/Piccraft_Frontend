@@ -1,4 +1,5 @@
 
 export const auth = {
-    signup:'/auth/signup'
+    signup:'/auth/signup',
+    login:'/auth/login'
 }
