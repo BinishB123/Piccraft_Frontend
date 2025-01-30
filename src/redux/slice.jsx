@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { loginUser } from './thunk/auth';
+import { loginUser, signUpUser } from './thunk/auth';
 
 const storedUser = localStorage.getItem("user");
 const user = storedUser ? JSON.parse(storedUser) : null;
@@ -55,6 +55,15 @@ const userSlice =  createSlice({
             state.error = true
             state.errormessage = action.payload.error
             
+        }).addCase(signUpUser.fulfilled,(state,action)=>{
+            state.success = true
+            state.message ="Sign-Up Success"
+            state.userInfo = action.payload
+            localStorage.setItem("user",JSON.stringify(action.payload))
+
+        }).addCase(signUpUser.rejected,(state,action)=>{
+            state.error = true
+            state.errormessage = action.payload.error
         })
     }
 })

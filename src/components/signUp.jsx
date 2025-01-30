@@ -2,8 +2,11 @@ import { useReducer } from "react";
 import signupReducer from "../reducers/signUpReducer";
 import { signup } from "../service/auth";
 import { toast } from "sonner";
+import { signUpUser } from "../redux/thunk/auth";
+import { useDispatch } from "react-redux";
 
 function Signup() {
+  const signUpDispatch = useDispatch()
   const [signUpData, dispatch] = useReducer(signupReducer, {
     name: "",
     email: "",
@@ -27,13 +30,7 @@ function Signup() {
       return toast.warning("please provide valid emailId ");
     }
 
-    signup(signUpData)
-      .then(() => {
-        toast.success("Sign-Up success ");
-      })
-      .catch((error) => {
-        toast.error(error.error);
-      });
+    signUpDispatch(signUpUser(signUpData))
   };
 
   return (

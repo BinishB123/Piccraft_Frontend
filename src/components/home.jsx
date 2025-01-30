@@ -29,7 +29,7 @@ function Home() {
             </div>
             <div className="w-[100%] h-[40px] cursor-pointer">
 
-            </div>
+            </div>  
 
         </div>
         
