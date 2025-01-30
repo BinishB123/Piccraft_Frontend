@@ -1,17 +1,40 @@
 import { useReducer } from "react";
 import signupReducer from "../reducers/signUpReducer";
-import { axiosInstance } from "../api/axios";
+import { signup } from "../service/auth";
+import { toast } from "sonner";
 
 function Signup() {
-  const [signUpData,dispatch] = useReducer(signupReducer,{name:"",email:"",password:"",mobile:""})
+  const [signUpData, dispatch] = useReducer(signupReducer, {
+    name: "",
+    email: "",
+    mobile: "",
+    password: "",
+  });
 
-  const submitfunction = ()=>{
-    axiosInstance.post('/auth/signup',{signUpData}).then((response)=>{
-      console.log(response);
-      
-    })
-  }
+  const submitfunction = () => {
+    if (!/^[A-Za-z]+$/.test(signUpData.name.trim())) {
+      return toast.warning("please provide a proper name");
+    }
+    if (
+      !/^[0-9]+$/.test(signUpData.mobile.trim()) ||
+      signUpData.mobile.length !== 10
+    ) {
+      return toast.warning("please provide a valid mobile number");
+    }
+    if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(signUpData.email)
+    ) {
+      return toast.warning("please provide valid emailId ");
+    }
 
+    signup(signUpData)
+      .then(() => {
+        toast.success("Sign-Up success ");
+      })
+      .catch((error) => {
+        toast.error(error.error);
+      });
+  };
 
   return (
     <>
@@ -25,9 +48,7 @@ function Signup() {
           <h2 className="text-sm text-green-700">Name</h2>
           <input
             value={signUpData.name}
-            onChange={(e)=>{
-              dispatch({type:"name",name:e.target.value})
-            }}
+            onChange={(e) => dispatch({ type: "name", name: e.target.value })}
             type="text"
             className="w-full  pl-4 h-[40px] border-2 rounded-sm border-green-400 outline-none"
             name=""
@@ -37,6 +58,10 @@ function Signup() {
         <div className="w-[80%] h-[60px] ">
           <h2 className="text-sm text-green-700">Mobile</h2>
           <input
+            value={signUpData.mobile}
+            onChange={(e) =>
+              dispatch({ type: "mobile", mobile: e.target.value })
+            }
             type="text"
             className="w-full  pl-4 h-[40px] border-2 rounded-sm border-green-400 outline-none"
             name=""
@@ -46,6 +71,8 @@ function Signup() {
         <div className="w-[80%] h-[60px] ">
           <h2 className="text-sm text-green-700">Email</h2>
           <input
+            value={signUpData.email}
+            onChange={(e) => dispatch({ type: "email", email: e.target.value })}
             type="text"
             className="w-full h-[40px]  pl-4 border-2 rounded-sm border-green-400 outline-none"
             name=""
@@ -55,18 +82,26 @@ function Signup() {
         <div className="w-[80%] h-[60px] ">
           <h2 className="text-sm text-green-700">Password</h2>
           <input
-            type="text"
+            value={signUpData.password}
+            onChange={(e) =>
+              dispatch({ type: "password", password: e.target.value })
+            }
+            type="password"
             className="w-full h-[40px]  pl-4 border-2 rounded-sm border-green-400 outline-none"
             name=""
             id=""
           />
         </div>
         <div className="w-[80%] h-[100px]  flex flex-col justify-center">
-          <button className="w-[100%] h-[50px] bg-green-400 text-xl cursor-pointer text-white rounded-md font-semibold" onClick={submitfunction}>
+          <button
+            className=" hover:bg-green-500  w-[100%] h-[50px] bg-green-400 text-xl cursor-pointer text-white rounded-md font-semibold"
+            onClick={submitfunction}
+          >
             SIGN UP
           </button>
-          <h1 className="text-sm text-grey-500 text-center font-semibold cursor-pointer ">Sign-In if you  have an account ?</h1>
-
+          <h1 className="text-sm text-grey-500 text-center font-semibold cursor-pointer ">
+            Sign-In if you have an account ?
+          </h1>
         </div>
       </div>
     </>
