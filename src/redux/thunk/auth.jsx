@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginService, signup } from "../../service/auth";
+import { loginService, logOut, signup } from "../../service/auth";
 
 
 export const loginUser = createAsyncThunk(
@@ -23,3 +23,13 @@ export const loginUser = createAsyncThunk(
         return rejectWithValue(error||"signup Failed")
     }
   })
+
+
+  export const logoutthunk = createAsyncThunk('user/logout', async () => {
+    try {
+        const response = await logOut()
+        return response
+    } catch (error) {
+        throw new Error(error instanceof Error ? error.message : 'An unknown error occurred');
+    }
+})

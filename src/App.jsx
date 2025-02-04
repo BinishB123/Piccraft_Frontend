@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(()=>{
     if (!userInfo?.id) {
       navigate("/login", { replace: true })
-      return
+      return    
   }
 
   },[])

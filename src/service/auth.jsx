@@ -1,5 +1,5 @@
 import { auth } from "../api/api"
-import { axiosInstance } from "../api/axios"
+import { axiosInstance } from "../api/axios.jsx"
 
 export const signup = (bodydata) => {
     return new Promise((resolve, reject) => {
@@ -33,3 +33,23 @@ export const loginService = (email,password)=>{
         }
     })
 }
+
+
+export const logOut = ()=>{
+    return new Promise((resolve, reject) => {
+        try {
+            axiosInstance.delete(auth.logout).then((response) => {
+                resolve(response)
+            }).catch((error) => {
+                
+                
+                reject(error.response.data)
+            })
+        } catch (error) {
+            reject(error.response.data)
+
+        }
+    })
+}
+
+
