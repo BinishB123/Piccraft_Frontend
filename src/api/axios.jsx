@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const apiUrl = import.meta.env.VITE_BACKEND_BASE_URL 
+export const apiUrl = "https://piccraft-backend-tg36.vercel.app"
 
 export const axiosInstance = axios.create({
   baseURL: apiUrl,
