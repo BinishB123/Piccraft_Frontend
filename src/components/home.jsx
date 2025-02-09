@@ -21,16 +21,20 @@ function Home() {
   const [imageEditData, setEditImageData] = useState(null);
   const [editTittle, setEditTittle] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
+  const [pagination,setPagination] = useState(1)
   useEffect(() => {
-    getLatestImages(userInfo.id)
+    getLatestImages(userInfo.id,pagination)
       .then((response) => {
+        console.log(response);
+        
         setTotalData(response.data.count)
         setHomeImages(response.data.images);
       })
       .catch((error) => {
         clear(error);
       });
-  }, []);
+  }, [pagination]);
+console.log(pagination);
 
   const changeTittle = (id) => {
     changeTittleService(id, tittle).then((response) => {
@@ -150,16 +154,25 @@ function Home() {
           )}
           </Droppable>
           </DragDropContext>
-          <div className="w-[100%] h-[40px] cursor-pointer flex justify-center space-x-3">
-            {totalData&&(<><div className="bg-green-800 place-content-center rounded-full place-items-center w-[3%] h-full">
+          <div className="w-[100%] h-[40px] cursor-pointer flex justify-center space-x-3" >
+            {totalData&&(<><div className="bg-green-800 place-content-center rounded-full place-items-center w-[3%] h-full"onClick={()=>{
+            setPagination(pagination<2?1:pagination-1)
+          }}>
             <h1 className="text-2xl text-white font-bold">{"<"}</h1>
             </div>
             <div className="border-2 rounded-full border-green-500 place-content-center place-items-center w-[3%] h-full">
-              <h1 className="text-sm font-semibold text-green-500">1</h1>
+              <h1 className="text-sm font-semibold text-green-500">{pagination}</h1>
             </div>
-            <div className="bg-green-800 place-content-center rounded-full place-items-center w-[3%] h-full">
+          {
+            (totalData>pagination*8&&<>
+              <div className="bg-green-800 place-content-center rounded-full place-items-center w-[3%] h-full"onClick={()=>{
+            setPagination(pagination+1)
+             }}>
             <h1 className="text-2xl text-white font-bold ">{">"}</h1>
-            </div></>)}
+            </div>
+            </>)
+          }
+            </>)}
 
           </div>
         </div>

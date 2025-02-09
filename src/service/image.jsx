@@ -18,9 +18,9 @@ export const addImagesServices = (data)=>{
   })
 }
 
-export const getLatestImages = (id)=>{
+export const getLatestImages = (id,skip)=>{
   return new Promise((resolve,reject)=>{
-    axiosInstance.get(image.getlatestImages+`/${id}`).then((response)=>{
+    axiosInstance.get(image.getlatestImages+`/${id}/${skip}`).then((response)=>{
       resolve(response)
     }).catch((error)=>{
       reject(error.response.data)
