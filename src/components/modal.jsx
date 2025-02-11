@@ -80,7 +80,7 @@ function ModalForImageupload() {
     });
     setUploading(true)
     addImagesServices(data).then((response)=>{
-      console.log(response.data.images);
+      console.log("thyr",response.data.images);
       
       setHomeImages(response.data.images)
       setImageModal(false)
