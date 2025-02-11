@@ -80,7 +80,9 @@ function ModalForImageupload() {
     });
     setUploading(true)
     addImagesServices(data).then((response)=>{
-      setHomeImages(response.data)
+      console.log(response.data.images);
+      
+      setHomeImages(response.data.images)
       setImageModal(false)
       setUploading(false)
     });
