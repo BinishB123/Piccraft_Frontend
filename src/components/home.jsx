@@ -57,6 +57,8 @@ console.log(pagination);
 
   const deleteImg = (id) => {
     deleteAnImage(id, userInfo.id).then((response) => {
+      console.log(response.data);
+      
       setHomeImages(response.data);
     });
   };
@@ -91,7 +93,7 @@ console.log(pagination);
            <Droppable droppableId="yoooo">
           {(provided)=>(
             <div className="w-[100%] h-[550px] grid grid-cols-4  items-center gap-3  space-x-1" {...provided.droppableProps} ref={provided.innerRef}>
-           {homesImages.map((data, index) => (
+           {homesImages.length>0&&homesImages.map((data, index) => (
             <>
           <Draggable key={data._id} draggableId={data._id} index={index}>
 
