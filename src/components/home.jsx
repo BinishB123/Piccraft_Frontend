@@ -59,7 +59,7 @@ console.log(pagination);
     deleteAnImage(id, userInfo.id).then((response) => {
       console.log(response.data);
       
-      setHomeImages(response.images );
+      setHomeImages(response.data.images );
     });
   };
 
